@@ -54,7 +54,7 @@ stages {
         --scan . \
         --format HTML \
         --out dependency-check-report \
-        --data /home/ubuntu/dependency-check-data \
+        --data /var/lib/jenkins/dependency-check-data \
         --noupdate
         '''
     }
