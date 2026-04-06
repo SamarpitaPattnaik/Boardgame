@@ -49,8 +49,7 @@ pipeline {
                 --format HTML \
                 --out dependency-check-report \
                 --data /var/lib/jenkins/dependency-check-data \
-                --noupdate \
-                --disableOssIndex || true
+                --noupdate
                 '''
             }
         }
@@ -90,6 +89,14 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'dependency-check-report/**/*.*', allowEmptyArchive: true
+             publishHTML([
+            reportDir: 'dependency-check-report',
+            reportFiles: 'index.html',
+            reportName: 'OWASP Dependency Check Report',
+            keepAll: true,
+            alwaysLinkToLastBuild: true,
+            allowMissing: true
+        ])
         }
         success {
             echo 'Pipeline completed successfully! 🚀'
