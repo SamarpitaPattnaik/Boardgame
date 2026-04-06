@@ -47,17 +47,19 @@ stages {
     }
 
     stage('OWASP Dependency Check') {
-        steps {
-            sh '''
-            /opt/dependency-check/bin/dependency-check.sh \
-            --project myapp \
-            --scan . \
-            --format HTML \
-            --out dependency-check-report || true
-            '''
-        }
+    steps {
+        sh '''
+        /opt/dependency-check/bin/dependency-check.sh \
+        --project myapp \
+        --scan . \
+        --format HTML \
+        --out dependency-check-report \
+        --data /home/ubuntu/dependency-check-data \
+        --noupdate
+        '''
     }
-
+}
+    
     stage('Docker Build') {
         steps {
             sh '''
