@@ -20,9 +20,11 @@
     <description>Spring Boot Project</description>
     <packaging>jar</packaging>
 
-    <!-- ✅ Properties -->
+    <!-- ✅ FIXED PROPERTIES -->
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <jacoco.version>0.8.10</jacoco.version>
     </properties>
 
@@ -62,14 +64,15 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Lombok -->
+        <!-- ✅ FIXED Lombok (VERY IMPORTANT) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
 
-        <!-- ✅ Testing (VERY IMPORTANT for coverage) -->
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -84,9 +87,20 @@
 
     </dependencies>
 
-    <!-- ✅ Build Plugins -->
+    <!-- ✅ BUILD PLUGINS -->
     <build>
         <plugins>
+
+            <!-- ✅ Compiler Plugin (FIXED FOR JDK 17) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
 
             <!-- Spring Boot -->
             <plugin>
@@ -94,22 +108,19 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- ✅ JaCoCo Plugin (FIXED) -->
+            <!-- ✅ JaCoCo -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
-
                 <executions>
 
-                    <!-- Attach JaCoCo agent -->
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
 
-                    <!-- Generate report during test phase -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
@@ -124,7 +135,7 @@
         </plugins>
     </build>
 
-    <!-- ✅ Nexus Distribution -->
+    <!-- Nexus -->
     <distributionManagement>
         <repository>
             <id>maven-releases</id>
