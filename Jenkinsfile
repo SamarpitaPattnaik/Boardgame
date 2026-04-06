@@ -54,7 +54,7 @@ stages {
         --scan . \
         --format HTML \
         --out dependency-check-report \
-        --disableNvd
+        --noupdate
         '''
     }
 }
