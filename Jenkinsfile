@@ -46,7 +46,7 @@ stages {
         }
     }
 
-    stage('OWASP Dependency Check') {
+   stage('OWASP Dependency Check') {
     steps {
         sh '''
         /opt/dependency-check/bin/dependency-check.sh \
@@ -54,8 +54,7 @@ stages {
         --scan . \
         --format HTML \
         --out dependency-check-report \
-        --data /home/ubuntu/dependency-check-data \
-        --noupdate
+        --disableNvd
         '''
     }
 }
