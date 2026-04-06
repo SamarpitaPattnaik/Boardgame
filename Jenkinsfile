@@ -53,7 +53,9 @@ stages {
         --project myapp \
         --scan . \
         --format HTML \
-        --out dependency-check-report
+        --out dependency-check-report \
+        --data /home/ubuntu/dependency-check-data \
+        --noupdate
         '''
     }
 }
