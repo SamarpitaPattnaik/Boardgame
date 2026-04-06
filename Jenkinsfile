@@ -50,6 +50,7 @@ pipeline {
                 --out dependency-check-report \
                 --data /var/lib/jenkins/dependency-check-data \
                 --noupdate
+                --disableOssIndex || true
                 '''
             }
         }
