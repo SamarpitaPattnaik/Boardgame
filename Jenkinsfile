@@ -41,19 +41,19 @@ pipeline {
         }
         
         stage('OWASP Dependency Check') {
-            steps {
-                sh '''
-                /opt/dependency-check/bin/dependency-check.sh \
-                --project myapp \
-                --scan . \
-                --format HTML \
-                --out dependency-check-report \
-                --data /var/lib/jenkins/dependency-check-data \
-                --noupdate
-                --disableOssIndex
-                '''
-            }
-        }
+    steps {
+        sh '''
+        /opt/dependency-check/bin/dependency-check.sh \
+        --project myapp \
+        --scan . \
+        --format HTML \
+        --out dependency-check-report \
+        --data /var/lib/jenkins/dependency-check-data \
+        --noupdate \
+        --disableOssIndex
+        '''
+    }
+}
 
         stage('Docker Build') {
             steps {
