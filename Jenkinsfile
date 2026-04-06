@@ -87,6 +87,7 @@ pipeline {
             }
         }
     }
+    // To get the dependency check url of OWASP
     post {
         always {
             archiveArtifacts artifacts: 'dependency-check-report/**/*.*', allowEmptyArchive: true
@@ -100,7 +101,7 @@ pipeline {
         ])
         }
         success {
-            echo 'Pipeline completed successfully! 🚀'
+            echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline failed. Check logs.'
