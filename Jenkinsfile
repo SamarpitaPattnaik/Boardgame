@@ -16,7 +16,7 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/SamarpitaPattnaik/Boardgame.git'
+                git branch: 'main', url: 'https://github.com/SamarpitaPattnaik/Poc_8.git'
             }
         }
 
@@ -39,37 +39,12 @@ pipeline {
                 }
             }
         }
-        
-        stage('OWASP Dependency Check') {
-    steps {
-        sh '''
-        /opt/dependency-check/bin/dependency-check.sh \
-        --project myapp \
-        --scan . \
-        --format HTML \
-        --out dependency-check-report \
-        --data /var/lib/jenkins/dependency-check-data \
-        --noupdate \
-        --disableOssIndex
-        '''
-    }
-}
 
         stage('Docker Build') {
             steps {
                 sh '''
                 docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
                 docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest
-                '''
-            }
-        }
-        stage('Trivy Scan') {
-            steps {
-                sh '''
-                trivy image \
-                --exit-code 0 \
-                --severity HIGH,CRITICAL \
-                ${IMAGE_NAME}:${IMAGE_TAG}
                 '''
             }
         }
@@ -87,19 +62,6 @@ pipeline {
             }
         }
     }
-    // To get the dependency check url of OWASP
-    post {
-        always {
-            archiveArtifacts artifacts: 'dependency-check-report/**/*.*', allowEmptyArchive: true
-             publishHTML([
-            reportDir: 'dependency-check-report',
-            reportFiles: 'index.html',
-            reportName: 'OWASP Dependency Check Report',
-            keepAll: true,
-            alwaysLinkToLastBuild: true,
-            allowMissing: true
-        ])
-        }
         success {
             echo 'Pipeline completed successfully!'
         }
