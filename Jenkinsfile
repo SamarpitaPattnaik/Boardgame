@@ -22,8 +22,11 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                sh 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 export PATH=$JAVA_HOME/bin:$PATH'
-                sh 'mvn clean verify'
+                sh '''
+                export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+                export PATH=$JAVA_HOME/bin:$PATH
+                mvn clean verify
+                '''
             }
         }
 
@@ -62,6 +65,8 @@ pipeline {
             }
         }
     }
+
+    post {
         success {
             echo 'Pipeline completed successfully!'
         }
